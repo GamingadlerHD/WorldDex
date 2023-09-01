@@ -77,17 +77,6 @@ class gaPacks(commands.Cog):
                     message,
                     file=discord.File(file_location, filename=file_name),
                 )
-
-    
-
-class gaPlayers(commands.GroupCog, group_name=settings.players_group_cog_name):
-    """
-    /balls commands
-    """
-
-    def __init__(self, bot: "BallsDexBot"):
-        self.bot = bot
-
     
     @app_commands.command()
     @app_commands.checks.cooldown(1, 60, key=lambda i: i.user.id)
@@ -129,7 +118,7 @@ class gaPlayers(commands.GroupCog, group_name=settings.players_group_cog_name):
     
     @app_commands.command()
     @app_commands.checks.cooldown(1, 60, key=lambda i: i.user.id)
-    async def rarity(self, interaction: discord.Interaction):
+    async def country_rarity(self, interaction: discord.Interaction):
         # DO NOT CHANGE THE CREDITS TO THE AUTHOR HERE!
         """
         Show the rarity list of the dex - made by GamingadlerHD
