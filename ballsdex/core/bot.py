@@ -32,7 +32,7 @@ from ballsdex.settings import settings
 
 log = logging.getLogger("ballsdex.core.bot")
 
-PACKAGES = ["config", "players", "countryballs", "info", "admin", "trade"]
+PACKAGES = ["config", "players", "countryballs", "info", "admin", "trade", "gafusionv2", "gapacks"]
 
 
 def owner_check(ctx: commands.Context[BallsDexBot]):
