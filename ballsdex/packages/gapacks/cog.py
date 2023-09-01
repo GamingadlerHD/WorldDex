@@ -78,6 +78,17 @@ class gaPacks(commands.Cog):
                     file=discord.File(file_location, filename=file_name),
                 )
 
+    
+
+class gaPlayers(commands.GroupCog, group_name=settings.players_group_cog_name):
+    """
+    /balls commands
+    """
+
+    def __init__(self, bot: "BallsDexBot"):
+        self.bot = bot
+
+    
     @app_commands.command()
     @app_commands.checks.cooldown(1, 60, key=lambda i: i.user.id)
     async def spawnalert(self, interaction: discord.Interaction, option: bool):
@@ -168,13 +179,3 @@ class gaPacks(commands.Cog):
 
         pages = Pages(source=source, interaction=interaction, compact=True)
         await pages.start()
-
-class gaPlayers(commands.GroupCog, group_name=settings.players_group_cog_name):
-    """
-    /balls commands
-    """
-
-    def __init__(self, bot: "BallsDexBot"):
-        self.bot = bot
-
-    
