@@ -125,7 +125,7 @@ def write_default_settings(path: "Path"):
 discord-token: 
 
 # prefix for old-style text commands, mostly unused
-text-prefix: b.
+text-prefix: r.
 
 # define the elements given with the /about command
 about:
@@ -133,16 +133,16 @@ about:
   # define the beginning of the description of /about
   # the other parts is automatically generated
   description: >
-    Collect countryballs on Discord, exchange them and battle with friends!
+    Collect countryballs on Discord, exchange them or fuse dupes!
 
   # override this if you have a fork
-  github-link: https://github.com/laggron42/BallsDex-DiscordBot
+  github-link: https://github.com/GamingadlerHD/WorldDex
 
   # valid invite for a Discord server
-  discord-invite: https://discord.gg/ballsdex  # BallsDex official server
+  discord-invite: https://discord.gg/rAYKDAaEBf # WorldDex official server
 
-  terms-of-service: https://gist.github.com/laggron42/52ae099c55c6ee1320a260b0a3ecac4e
-  privacy-policy: https://gist.github.com/laggron42/1eaa122013120cdfcc6d27f9485fe0bf
+  terms-of-service: https://gist.github.com/GamingadlerHD/ab167753d4a479fbf0535750891d4412
+  privacy-policy: https://gist.github.com/GamingadlerHD/31d6601feef544b3f3a35560b42e5496
 
 # WORK IN PROGRESS, DOES NOT FULLY WORK
 # override the name "countryballs" in the bot
@@ -150,7 +150,7 @@ collectible-name: countryball
 
 # WORK IN PROGRESS, DOES NOT FULLY WORK
 # override the name "BallsDex" in the bot
-bot-name: BallsDex
+bot-name: WorldDex
 
 # players group cog command name
 # this is /balls by default, but you can change it for /animals or /rocks for example
@@ -166,16 +166,22 @@ admin-command:
 
   # list of guild IDs where /admin should be registered
   guild-ids:
+      - 1108817636105666600
+      - 659025574940901407
 
   # list of role IDs having full access to /admin
   root-role-ids:
+      - 1109158375964553230
+      - 659028509041229825
 
   # list of role IDs having partial access to /admin
   admin-role-ids:
+      - 1109158605443305503
+      - 659028509041229825
 
 # log channel for moderation actions
 log-channel:
-
+    - 1108817637896618048
 # manage bot ownership
 owners:
   # if enabled and the application is under a team, all team members will be considered as owners
