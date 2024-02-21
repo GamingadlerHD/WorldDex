@@ -26,7 +26,9 @@ caught_balls = Counter(
 
 class CountryballNamePrompt(Modal, title=f"Catch this {settings.collectible_name}!"):
     name = TextInput(
-        label="Name of this country", style=discord.TextStyle.short, placeholder="Your guess"
+        label=f"Name of this {settings.collectible_name}",
+        style=discord.TextStyle.short,
+        placeholder="Your guess",
     )
 
     def __init__(self, ball: "CountryBall", button: CatchButton):
@@ -37,9 +39,13 @@ class CountryballNamePrompt(Modal, title=f"Catch this {settings.collectible_name
     async def on_error(self, interaction: discord.Interaction, error: Exception, /) -> None:
         log.exception("An error occured in countryball catching prompt", exc_info=error)
         if interaction.response.is_done():
-            await interaction.followup.send("An error occured with this countryball.")
+            await interaction.followup.send(
+                f"An error occured with this {settings.collectible_name}."
+            )
         else:
-            await interaction.response.send_message("An error occured with this countryball.")
+            await interaction.response.send_message(
+                f"An error occured with this {settings.collectible_name}."
+            )
 
     async def on_submit(self, interaction: discord.Interaction["BallsDexBot"]):
         # TODO: use lock
@@ -61,7 +67,7 @@ class CountryballNamePrompt(Modal, title=f"Catch this {settings.collectible_name
 
             special = ""
             if ball.shiny:
-                special += f"✨ ***It's a shiny {settings.collectible_name} !*** ✨\n"
+                special += f"✨ ***It's a shiny {settings.collectible_name}!*** ✨\n"
             if ball.specialcard and ball.specialcard.catch_phrase:
                 special += f"*{ball.specialcard.catch_phrase}*\n"
             if has_caught_before:
@@ -96,7 +102,7 @@ class CountryballNamePrompt(Modal, title=f"Catch this {settings.collectible_name
             # Here we try to determine what should be the chance of having a common card
             # since the rarity field is a value between 0 and 1, 1 being no common
             # and 0 only common, we get the remaining value by doing (1-rarity)
-            # We the sum each value for each current event, and we should get an algorithm
+            # We then sum each value for each current event, and we should get an algorithm
             # that kinda makes sense.
             common_weight = sum(1 - x.rarity for x in population)
 

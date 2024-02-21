@@ -146,6 +146,7 @@ class Ball(models.Model):
         max_length=256, description="Description of the countryball's capacity"
     )
     capacity_logic = fields.JSONField(description="Effect of this capacity", default={})
+    created_at = fields.DatetimeField(auto_now_add=True, null=True)
 
     instances: fields.BackwardFKRelation[BallInstance]
 
@@ -188,6 +189,7 @@ class BallInstance(models.Model):
     )
     favorite = fields.BooleanField(default=False)
     tradeable = fields.BooleanField(default=True)
+    extra_data = fields.JSONField(default={})
 
     class Meta:
         unique_together = ("player", "id")
@@ -226,8 +228,10 @@ class BallInstance(models.Model):
     def __str__(self) -> str:
         return self.to_string()
 
-    def to_string(self, bot: discord.Client | None = None) -> str:
+    def to_string(self, bot: discord.Client | None = None, is_trade: bool = False) -> str:
         emotes = ""
+        if bot and self.pk in bot.locked_balls and not is_trade:  # type: ignore
+            emotes += "🔒"
         if self.favorite:
             emotes += "❤️"
         if self.shiny:
@@ -265,8 +269,9 @@ class BallInstance(models.Model):
         short: bool = False,
         include_emoji: bool = False,
         bot: discord.Client | None = None,
+        is_trade: bool = False,
     ) -> str:
-        text = self.to_string(bot)
+        text = self.to_string(bot, is_trade=is_trade)
         if not short:
             text += f" ATK:{self.attack_bonus:+d}% HP:{self.health_bonus:+d}%"
         if include_emoji:
@@ -339,6 +344,12 @@ class DonationPolicy(IntEnum):
     ALWAYS_DENY = 3
 
 
+class PrivacyPolicy(IntEnum):
+    ALLOW = 1
+    DENY = 2
+    SAME_SERVER = 3
+
+
 class Player(models.Model):
     discord_id = fields.BigIntField(
         description="Discord user ID", unique=True, validators=[DiscordSnowflakeValidator()]
@@ -347,6 +358,11 @@ class Player(models.Model):
         DonationPolicy,
         description="How you want to handle donations",
         default=DonationPolicy.ALWAYS_ACCEPT,
+    )
+    privacy_policy = fields.IntEnumField(
+        PrivacyPolicy,
+        description="How you want to handle privacy",
+        default=PrivacyPolicy.DENY,
     )
     balls: fields.BackwardFKRelation[BallInstance]
 
